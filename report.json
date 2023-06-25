@@ -1,0 +1,52 @@
+{
+  "individualResults": [
+    {
+      "initialSchemaVersion": null,
+      "targetSchemaVersion": "1",
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "1",
+          "description": "create author table",
+          "type": "SQL",
+          "filepath": "C:\\Users\\Charaka - Nimi\\Desktop\\Personal Projects\\CBA\\rtw-publications\\flyway_db_migrations\\V1__create_author_table.pgsql",
+          "executionTime": 21
+        }
+      ],
+      "migrationsExecuted": 1,
+      "success": true,
+      "flywayVersion": "9.20.0",
+      "database": "rtw_pub",
+      "warnings": [],
+      "timestamp": "2023-06-25T19:45:31.894828200",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    },
+    {
+      "initialSchemaVersion": "1",
+      "targetSchemaVersion": "2",
+      "schemaName": "",
+      "migrations": [
+        {
+          "category": "Versioned",
+          "version": "2",
+          "description": "create book table",
+          "type": "SQL",
+          "filepath": "C:\\Users\\Charaka - Nimi\\Desktop\\Personal Projects\\CBA\\rtw-publications\\flyway_db_migrations\\V2__create_book_table.pgsql",
+          "executionTime": 27
+        }
+      ],
+      "migrationsExecuted": 1,
+      "success": true,
+      "flywayVersion": "9.20.0",
+      "database": "rtw_pub",
+      "warnings": [],
+      "timestamp": "2023-06-25T19:47:18.460163800",
+      "operation": "migrate",
+      "exception": null,
+      "licenseFailed": false
+    }
+  ]
+}

@@ -5,9 +5,8 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "migrate": "npx sequelize-cli db:migrate",
-    "migrate:down": "npx sequelize-cli db:migrate:undo",
-    "migrate:down:all": "npx sequelize-cli db:migrate:undo:all",
+    "flyway": "flyway -c config/.flyway.js",
+    "migrate": "npm run flyway -- migrate",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -29,6 +28,7 @@
     "jsonwebtoken": "^9.0.0",
     "nanoid": "^3.3.6",
     "node-cron": "^3.0.2",
+    "node-flywaydb": "^3.0.7",
     "pg": "^8.11.0",
     "phone": "^3.1.37",
     "sequelize": "^6.32.1",
