@@ -3,7 +3,7 @@ const authorModel = 'author';
 
 const AuthorRepository = {
   /**
-   * Function to create a new record in table 'author'
+   * Function to create a new record to table 'author'
    *
    * @param {Object} author: author details object
    * @returns an object containing newly created author details
@@ -25,7 +25,7 @@ const AuthorRepository = {
       };
     } catch (error) {
       await transaction.rollback();
-      throw new Error(`Internal server error while creating a new author: ${error.message}`);
+      throw new Error(`Internal server error occurred while creating a new author: ${error.message}`);
     }
   },
 
@@ -43,7 +43,7 @@ const AuthorRepository = {
         },
       });
     } catch (error) {
-      throw new Error(`Internal server error while getting author by email: ${error.message}`);
+      throw new Error(`Internal server error occurred while getting author by email: ${error.message}`);
     }
   },
 };

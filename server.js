@@ -36,9 +36,11 @@ sequelize
 
 // import routing files
 const author = require('./routes/author.routes');
+const book = require('./routes/book.routes');
 
 // set up routing paths
 app.use('/api/author', author);
+app.use('/api/book', book);
 
 // start the server
 const PORT = process.env.PORT || 3000;

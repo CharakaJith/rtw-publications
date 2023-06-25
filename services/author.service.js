@@ -10,9 +10,9 @@ const AuthorService = {
       const { firstName, lastName, email, mobile, password } = data;
 
       // validate user inputs
-      await Validator.validateUserInputs.checkIfEmptyString(firstName, 'First name');
-      await Validator.validateUserInputs.checkIfEmptyString(lastName, 'Last name');
-      await Validator.validateUserInputs.checkIfEmptyString(password, 'Password');
+      await Validator.validateUserInputs.validateName(firstName, 'first name');
+      await Validator.validateUserInputs.validateName(lastName, 'last name');
+      await Validator.validateUserInputs.checkIfEmptyString(password, 'password');
       await Validator.validateUserInputs.validateEmail(email);
       await Validator.validateUserInputs.validateMobileNumber(mobile);
 
@@ -49,7 +49,7 @@ const AuthorService = {
 
       // validate user inputs
       await Validator.validateUserInputs.validateEmail(email);
-      await Validator.validateUserInputs.checkIfEmptyString(password, 'Password');
+      await Validator.validateUserInputs.checkIfEmptyString(password, 'password');
 
       // check author exists
       const author = await AuthorRepository.getAuthorByEmail(email);
