@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS public.book (
-    "id" BIGSERIAL PRIMARY KEY,
+    "id" serial primary key,
     "bookId" character varying(255),
     "title" character varying(255),
     "authorId" character varying(255),

@@ -1,5 +1,4 @@
-const db = require('../models/index');
-const authorModel = 'author';
+const pool = require('../config/conn');
 
 const AuthorRepository = {
   /**
@@ -9,22 +8,25 @@ const AuthorRepository = {
    * @returns an object containing newly created author details
    */
   createNewAuthor: async (author) => {
-    const transaction = await db.sequelize.transaction();
     try {
-      const newAuthor = await db[authorModel].create(author, { transaction });
-
-      await transaction.commit();
+      const newAuthor = await pool.query(`INSERT INTO author ("authorId", "firstName", "lastName", "email", "mobile", "password") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`, [
+        author.authorId,
+        author.firstName,
+        author.lastName,
+        author.email,
+        author.mobile,
+        author.password,
+      ]);
 
       return {
-        id: newAuthor.id,
-        authorId: newAuthor.authorId,
-        firstName: newAuthor.firstName,
-        lastName: newAuthor.lastName,
-        email: newAuthor.email,
-        mobile: newAuthor.mobile,
+        id: newAuthor.rows[0].id,
+        authorId: newAuthor.rows[0].authorId,
+        firstName: newAuthor.rows[0].firstName,
+        lastName: newAuthor.rows[0].lastName,
+        email: newAuthor.rows[0].email,
+        mobile: newAuthor.rows[0].mobile,
       };
     } catch (error) {
-      await transaction.rollback();
       throw new Error(`Internal server error occurred while creating a new author: ${error.message}`);
     }
   },
@@ -37,11 +39,9 @@ const AuthorRepository = {
    */
   getAuthorByEmail: async (email) => {
     try {
-      return await db[authorModel].findOne({
-        where: {
-          email: email,
-        },
-      });
+      const author = await pool.query('SELECT * FROM author WHERE "email" = $1', [email]);
+
+      return author.rows[0];
     } catch (error) {
       throw new Error(`Internal server error occurred while getting author by email: ${error.message}`);
     }
@@ -55,12 +55,9 @@ const AuthorRepository = {
    */
   getAuthorById: async (authorId) => {
     try {
-      return await db[authorModel].findOne({
-        attributes: { exclude: ['password'] },
-        where: {
-          authorId: authorId,
-        },
-      });
+      const author = await pool.query('SELECT "authorId", "firstName", "lastName", "email", "mobile" FROM author WHERE "authorId" = $1', [authorId]);
+
+      return author.rows[0];
     } catch (error) {
       throw new Error(`Internal server error occurred while getting author by author id: ${error.message}`);
     }
@@ -73,7 +70,9 @@ const AuthorRepository = {
    */
   getAllAuthors: async () => {
     try {
-      return await db[authorModel].findAll();
+      const authors = await pool.query('SELECT * FROM author');
+
+      return authors.rows;
     } catch (error) {
       throw new Error(`Internal server error occurred while getting all authors details: ${error.message}`);
     }

@@ -52,7 +52,7 @@ const BookService = {
       // get book details
       const book = await BookRepository.getBookByIsbn(isbn);
       if (!book) {
-        throw new Error('Unregistered ISBN code!');
+        throw new Error('Invalid ISBN code!');
       }
 
       // get author details
@@ -80,6 +80,10 @@ const BookService = {
       // update likes
       const bookDetails = {
         bookId: bookId,
+        title: book.title,
+        authorId: book.authorId,
+        category: book.category,
+        isbn: book.isbn,
         likes: book.likes + 1,
       };
       await BookRepository.updateBookDetails(bookDetails);

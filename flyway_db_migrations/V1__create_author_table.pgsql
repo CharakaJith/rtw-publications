@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS public.author (
-    "id" BIGSERIAL PRIMARY KEY,
+    "id" serial primary key,
     "authorId" character varying(255),
     "firstName" character varying(255),
     "lastName" character varying(255),

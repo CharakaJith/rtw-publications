@@ -1,11 +1,9 @@
 require('dotenv').config();
-const env = process.env.NODE_ENV || 'development';
-const config = require('./config')[env];
 
-const HOST = config.host;
-const DATABASE = config.database;
-const USERNAME = config.username;
-const PASSWORD = config.password;
+const HOST = process.env.PG_HOST;
+const DATABASE = process.env.PG_DATABASE;
+const USERNAME = process.env.PG_USER;
+const PASSWORD = process.env.PG_PASSWORD;
 
 module.exports = {
   flywayArgs: {
