@@ -4,6 +4,7 @@ const { authenticate } = require('../middleware/authenticate');
 const BookController = require('../controllers/book.controller');
 
 router.post('/add', authenticate, BookController.addNewBook);
+router.put('/like', BookController.addLikeForBook);
 router.get('/get/:isbn', BookController.getBookByIsbnCode);
 
 module.exports = router;

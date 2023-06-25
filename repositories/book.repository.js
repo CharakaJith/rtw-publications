@@ -1,3 +1,4 @@
+const { where } = require('sequelize');
 const db = require('../models/index');
 const bookModel = 'book';
 
@@ -19,6 +20,24 @@ const BookRepository = {
     } catch (error) {
       await transaction.rollback();
       throw new Error(`Internal server error occurred while creating a new book: ${error.message}`);
+    }
+  },
+
+  /**
+   * Function to fetch a record from table "book" by column "bookId"
+   *
+   * @param {String} bookId: id of the book
+   * @returns an object of book details if exists, else null
+   */
+  getBookById: async (bookId) => {
+    try {
+      return await db[bookModel].findOne({
+        where: {
+          bookId: bookId,
+        },
+      });
+    } catch (error) {
+      throw new Error(`Internal server error occurred while getting a book by book id: ${error.message}`);
     }
   },
 
@@ -55,6 +74,18 @@ const BookRepository = {
       });
     } catch (error) {
       throw new Error(`Internal server error occurred while getting a book by ISBN code: ${error.message}`);
+    }
+  },
+
+  updateBookDetails: async (book) => {
+    try {
+      await db[bookModel].update(book, {
+        where: {
+          bookId: book.bookId,
+        },
+      });
+    } catch (error) {
+      throw new Error(`Internal server error occurred while updating book details: ${error.message}`);
     }
   },
 };

@@ -62,6 +62,35 @@ const BookService = {
       throw error;
     }
   },
+
+  addLikeForBook: async (data) => {
+    try {
+      const { bookId } = data;
+
+      // validate user inputs
+      await Validator.validateUserInputs.checkIfEmptyString(bookId, 'Book id');
+
+      // check book exists
+      const book = await BookRepository.getBookById(bookId);
+      if (!book) {
+        throw new Error('Invalid book id!');
+      }
+
+      // update likes
+      const bookDetails = {
+        bookId: bookId,
+        likes: book.likes + 1,
+      };
+      await BookRepository.updateBookDetails(bookDetails);
+
+      // get updated book details
+      const updatedBook = await BookRepository.getBookById(bookId);
+
+      return updatedBook;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 module.exports = BookService;

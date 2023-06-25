@@ -35,6 +35,28 @@ const BookController = {
         success: true,
         message: getBookResponse,
       });
+
+      logger('info', true, '200', `book ${isbn} details fetched`, req);
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: error.message,
+      });
+
+      logger('error', false, '500', error.message, req);
+    }
+  },
+
+  addLikeForBook: async (req, res) => {
+    try {
+      const data = ({ bookId } = req.body);
+
+      const addLikeResponse = await BookService.addLikeForBook(data);
+
+      res.status(200).json({
+        success: true,
+        message: addLikeResponse,
+      });
     } catch (error) {
       res.status(500).json({
         success: false,
