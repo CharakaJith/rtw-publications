@@ -77,6 +77,11 @@ const BookRepository = {
     }
   },
 
+  /**
+   * Function to update existing record in table 'book'
+   *
+   * @param {Object} book: book details object
+   */
   updateBookDetails: async (book) => {
     try {
       await db[bookModel].update(book, {
@@ -86,6 +91,19 @@ const BookRepository = {
       });
     } catch (error) {
       throw new Error(`Internal server error occurred while updating book details: ${error.message}`);
+    }
+  },
+
+  getAllBooksByAuthor: async (authorId) => {
+    try {
+      return db[bookModel].findAll({
+        where: {
+          authorId: authorId,
+        },
+        order: [['likes', 'DESC']],
+      });
+    } catch (error) {
+      throw new Error(`Internal server error occurred while fetching book details by author id: ${error.message}`);
     }
   },
 };

@@ -2,8 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const chalk = require('chalk');
 const Sequelize = require('sequelize');
+const cron = require('node-cron');
 const env = process.env.NODE_ENV || 'development';
 const config = require('./config/config')[env];
+const BookService = require('./services/book.service');
 
 require('dotenv').config();
 const app = express();
@@ -39,6 +41,11 @@ const book = require('./routes/book.routes');
 // set up routing paths
 app.use('/api/author', author);
 app.use('/api/book', book);
+
+// generate log report by every 5 minute
+cron.schedule('0 */5 * * * *', () => {
+  BookService.generatePerformanceReport();
+});
 
 // start the server
 const PORT = process.env.PORT || 3000;

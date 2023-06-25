@@ -2,6 +2,7 @@ const Validator = require('../util/validator');
 const ExposableIdGenerator = require('../common/ExposableIdGenerator');
 const BookRepository = require('../repositories/book.repository');
 const AuthorRepository = require('../repositories/author.repository');
+const report = require('../middleware/logger/report');
 
 const BookService = {
   addNewBook: async (data) => {
@@ -87,6 +88,29 @@ const BookService = {
       const updatedBook = await BookRepository.getBookById(bookId);
 
       return updatedBook;
+    } catch (error) {
+      throw error;
+    }
+  },
+
+  generatePerformanceReport: async () => {
+    try {
+      const authorArray = [];
+      // get authors
+      const authors = await AuthorRepository.getAllAuthors();
+      for (const author of authors) {
+        // get books
+        const books = await BookRepository.getAllBooksByAuthor(author.authorId);
+
+        const data = {
+          author,
+          books,
+        };
+
+        authorArray.push(data);
+      }
+
+      report(authorArray);
     } catch (error) {
       throw error;
     }

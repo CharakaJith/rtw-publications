@@ -23,13 +23,13 @@ const logger = (logType, isSuccess, statusCode, message, req, stack) => {
   const logString = JSON.stringify(logBody).split('\n');
 
   if (logType === 'info') {
-    loggerIndex.info(logString);
+    loggerIndex.logger.info(logString);
   } else if (logType === 'warn') {
-    loggerIndex.warn(logString);
+    loggerIndex.logger.warn(logString);
   } else if (logType === 'debug') {
-    loggerIndex.debug(logString);
+    loggerIndex.logger.debug(logString);
   } else {
-    loggerIndex.error(logString);
+    loggerIndex.logger.error(logString);
   }
 };
 

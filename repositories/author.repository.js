@@ -65,6 +65,19 @@ const AuthorRepository = {
       throw new Error(`Internal server error occurred while getting author by author id: ${error.message}`);
     }
   },
+
+  /**
+   * Function to fetch all records from the table "author"
+   *
+   * @returns a list of author detail objects
+   */
+  getAllAuthors: async () => {
+    try {
+      return await db[authorModel].findAll();
+    } catch (error) {
+      throw new Error(`Internal server error occurred while getting all authors details: ${error.message}`);
+    }
+  },
 };
 
 module.exports = AuthorRepository;
