@@ -5,7 +5,7 @@ const Authenticate = {
   authenticate: async (req, res, next) => {
     try {
       // excluded routing paths
-      const nonSecurePaths = ['/api/author/register'];
+      const nonSecurePaths = ['/api/author/register', '/api/author/login'];
 
       if (nonSecurePaths.includes(req.path)) {
         return next();

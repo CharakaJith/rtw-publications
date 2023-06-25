@@ -41,6 +41,43 @@ const AuthorService = {
       throw error;
     }
   },
+
+  authorLogin: async (data) => {
+    try {
+      const { email, password } = data;
+
+      // validate user inputs
+      await Validator.validateUserInputs.validateEmail(email);
+      await Validator.validateUserInputs.checkIfEmptyString(password, 'Password');
+
+      // check author exists
+      const author = await AuthorRepository.getAuthorByEmail(email);
+      if (!author) {
+        throw new Error('Email is not registered!');
+      }
+
+      // validate password
+      const isValidPassword = await bcrypt.compare(password, author.password);
+      if (!isValidPassword) {
+        throw new Error('Invalid password!');
+      }
+
+      // TO DO: generate access token here
+
+      const authorDetails = {
+        id: author.id,
+        authorId: author.authorId,
+        firstName: author.firstName,
+        lastName: author.lastName,
+        email: author.email,
+        mobile: author.mobile,
+      };
+
+      return authorDetails;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 module.exports = AuthorService;
