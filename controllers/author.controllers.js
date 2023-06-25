@@ -1,3 +1,4 @@
+const logger = require('../middleware/logger/logger');
 const AuthorService = require('../services/author.service');
 
 const AuthorController = {
@@ -13,11 +14,15 @@ const AuthorController = {
         success: true,
         message: registerNewAuthorResponse,
       });
+
+      logger('info', true, '200', `author ${email} registered`, req);
     } catch (error) {
       res.status(500).json({
         success: false,
         error: error.message,
       });
+
+      logger('error', false, '500', error.message, req);
     }
   },
 };
