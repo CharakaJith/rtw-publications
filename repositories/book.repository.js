@@ -92,6 +92,12 @@ const BookRepository = {
     }
   },
 
+  /**
+   * Function to get records from table "book" by column "authorId"
+   *
+   * @param {String} authorId: id of the author
+   * @returns a list of book objects if exist, else an empty list
+   */
   getAllBooksByAuthor: async (authorId) => {
     try {
       const books = await pool.query('SELECT * FROM book WHERE "authorId" = $1 ORDER BY "likes" DESC', [authorId]);
