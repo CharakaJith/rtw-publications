@@ -2,7 +2,6 @@ const express = require('express');
 const cors = require('cors');
 const chalk = require('chalk');
 const Sequelize = require('sequelize');
-const Authenticate = require('./middleware/authenticate');
 const env = process.env.NODE_ENV || 'development';
 const config = require('./config/config')[env];
 
@@ -11,7 +10,6 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(Authenticate.authenticate);
 
 // Connect to the databse
 const sequelize = new Sequelize(config.database, config.username, config.password, {

@@ -57,11 +57,6 @@ const Validator = {
       if (!String(title).match(titleFormat)) {
         throw new Error('Invalid book title format!');
       }
-
-      const book = await BookRepository.getBookByTitle(title);
-      if (book) {
-        throw new Error(`There is already a book registered under the title ${title}`);
-      }
     },
 
     validateCategory: async (category) => {
@@ -83,11 +78,6 @@ const Validator = {
 
       if (!String(isbn).match(isbnFormat)) {
         throw new Error('Invalid ISBN code format!');
-      }
-
-      const book = await BookRepository.getBookByIsbn(isbn);
-      if (book) {
-        throw new Error(`There is already a book registered under the ISBN code ${isbn}`);
       }
     },
   },

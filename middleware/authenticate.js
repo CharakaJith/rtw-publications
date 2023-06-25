@@ -5,9 +5,9 @@ const Authenticate = {
   authenticate: async (req, res, next) => {
     try {
       // excluded routing paths
-      const nonSecurePaths = ['/api/author/register', '/api/author/login'];
+      const nonSecurePaths = ['/api/author/register', '/api/author/login', /^\/api\/book\/get\/\w+$/];
 
-      if (nonSecurePaths.includes(req.path)) {
+      if (nonSecurePaths.some((path) => (path instanceof RegExp ? path.test(req.path) : path === req.path))) {
         return next();
       } else {
         const token = req.headers.authorization;

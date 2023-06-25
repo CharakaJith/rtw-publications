@@ -46,6 +46,25 @@ const AuthorRepository = {
       throw new Error(`Internal server error occurred while getting author by email: ${error.message}`);
     }
   },
+
+  /**
+   * Funtion to fetch a record from table "author" by column "authorId"
+   *
+   * @param {String} authorId: id of the author
+   * @returns an object of author details if exists, else null
+   */
+  getAuthorById: async (authorId) => {
+    try {
+      return await db[authorModel].findOne({
+        attributes: { exclude: ['password'] },
+        where: {
+          authorId: authorId,
+        },
+      });
+    } catch (error) {
+      throw new Error(`Internal server error occurred while getting author by author id: ${error.message}`);
+    }
+  },
 };
 
 module.exports = AuthorRepository;
