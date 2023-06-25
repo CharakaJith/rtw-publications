@@ -30,9 +30,13 @@ const AuthorController = {
 
       const authorLoginResponse = await AuthorService.authorLogin(data);
 
+      // set response header
+      res.set({
+        'Access-Token': authorLoginResponse.accessToken,
+      });
       res.status(200).json({
         success: true,
-        message: authorLoginResponse,
+        message: authorLoginResponse.authorDetails,
       });
 
       logger('info', true, '200', `author ${email} logged in`, req);

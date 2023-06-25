@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt');
 const Validator = require('../util/validator');
+const JwtGenerator = require('../util/jwtGenerator');
 const ExposableIdGenerator = require('../common/ExposableIdGenerator');
 const AuthorRepository = require('../repositories/author.repository');
 
@@ -62,7 +63,13 @@ const AuthorService = {
         throw new Error('Invalid password!');
       }
 
-      // TO DO: generate access token here
+      // generate access token
+      const tokenUser = {
+        tokenUserId: author.authorId,
+        tokenUserName: `${author.firstName} ${author.lastName}`,
+        tokenUserEmail: author.email,
+      };
+      const accessToken = await JwtGenerator.generateNewAccessToken(tokenUser);
 
       const authorDetails = {
         id: author.id,
@@ -73,7 +80,7 @@ const AuthorService = {
         mobile: author.mobile,
       };
 
-      return authorDetails;
+      return { authorDetails, accessToken };
     } catch (error) {
       throw error;
     }
