@@ -57,6 +57,8 @@ const BookController = {
         success: true,
         message: addLikeResponse,
       });
+
+      logger('info', true, '200', `added a like for book ${bookId}`, req);
     } catch (error) {
       res.status(500).json({
         success: false,
