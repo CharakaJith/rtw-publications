@@ -1,6 +1,4 @@
-const { where } = require('sequelize');
-const db = require('../models/index');
-const bookModel = 'book';
+const pool = require('../config/conn');
 
 const BookRepository = {
   /**
@@ -10,15 +8,18 @@ const BookRepository = {
    * @returns an object containing newly created book details
    */
   createNewBook: async (book) => {
-    const transaction = await db.sequelize.transaction();
     try {
-      const newBook = await db[bookModel].create(book, { transaction });
+      const newBook = await pool.query(`INSERT INTO book ("bookId", "title", "authorId", "category", "isbn", "likes") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *`, [
+        book.bookId,
+        book.title,
+        book.authorId,
+        book.category,
+        book.isbn,
+        book.likes,
+      ]);
 
-      await transaction.commit();
-
-      return newBook;
+      return newBook.rows[0];
     } catch (error) {
-      await transaction.rollback();
       throw new Error(`Internal server error occurred while creating a new book: ${error.message}`);
     }
   },
@@ -31,11 +32,9 @@ const BookRepository = {
    */
   getBookById: async (bookId) => {
     try {
-      return await db[bookModel].findOne({
-        where: {
-          bookId: bookId,
-        },
-      });
+      const book = await pool.query('SELECT * FROM book WHERE "bookId" = $1', [bookId]);
+
+      return book.rows[0];
     } catch (error) {
       throw new Error(`Internal server error occurred while getting a book by book id: ${error.message}`);
     }
@@ -49,11 +48,9 @@ const BookRepository = {
    */
   getBookByTitle: async (title) => {
     try {
-      return await db[bookModel].findOne({
-        where: {
-          title: title,
-        },
-      });
+      const book = await pool.query('SELECT * FROM book WHERE "title" = $1', [title]);
+
+      return book.rows[0];
     } catch (error) {
       throw new Error(`Internal server error occurred while getting a book by title: ${error.message}`);
     }
@@ -67,11 +64,9 @@ const BookRepository = {
    */
   getBookByIsbn: async (isbn) => {
     try {
-      return await db[bookModel].findOne({
-        where: {
-          isbn: isbn,
-        },
-      });
+      const book = await pool.query('SELECT * FROM book WHERE "isbn" = $1', [isbn]);
+
+      return book.rows[0];
     } catch (error) {
       throw new Error(`Internal server error occurred while getting a book by ISBN code: ${error.message}`);
     }
@@ -84,11 +79,14 @@ const BookRepository = {
    */
   updateBookDetails: async (book) => {
     try {
-      await db[bookModel].update(book, {
-        where: {
-          bookId: book.bookId,
-        },
-      });
+      await pool.query('UPDATE book SET "bookId" = $1, "title" = $2, "authorId" = $3, "category" = $4, "isbn" = $5, "likes" = $6', [
+        book.bookId,
+        book.title,
+        book.authorId,
+        book.category,
+        book.isbn,
+        book.likes,
+      ]);
     } catch (error) {
       throw new Error(`Internal server error occurred while updating book details: ${error.message}`);
     }
@@ -102,12 +100,9 @@ const BookRepository = {
    */
   getAllBooksByAuthor: async (authorId) => {
     try {
-      return db[bookModel].findAll({
-        where: {
-          authorId: authorId,
-        },
-        order: [['likes', 'DESC']],
-      });
+      const books = await pool.query('SELECT * FROM book WHERE "authorId" = $1 ORDER BY "likes" DESC', [authorId]);
+
+      return books.rows;
     } catch (error) {
       throw new Error(`Internal server error occurred while fetching book details by author id: ${error.message}`);
     }

@@ -80,6 +80,10 @@ const BookService = {
       // update likes
       const bookDetails = {
         bookId: bookId,
+        title: book.title,
+        authorId: book.authorId,
+        category: book.category,
+        isbn: book.isbn,
         likes: book.likes + 1,
       };
       await BookRepository.updateBookDetails(bookDetails);
