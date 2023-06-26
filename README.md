@@ -9,6 +9,7 @@
 - clone the project into your local machine
 - `git checkout staging`
 - `npm install`
+- `npm run migrate`
 
 ### Setting up database connection
 
@@ -40,4 +41,5 @@ JWT_SECRET= <RANDOM_SECURE_KEY>
 - ##### The `orm-used` branch uses Sequelize ORM for database calls
   -- `git checkout orm-used`
   -- `npm install`  
+  -- `npm run migrate`
   -- `npm run dev`
