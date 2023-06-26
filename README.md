@@ -33,3 +33,11 @@ JWT_SECRET= <RANDOM_SECURE_KEY>
 ### starting the server
 
 - `npm run dev`
+
+## Notes
+
+- ##### The `staging` branch uses raw SQL queries for database calls
+- ##### The `orm-used` branch uses Sequelize ORM for database calls
+  -- `git checkout orm-used`
+  -- `npm install`  
+  -- `npm run dev`
