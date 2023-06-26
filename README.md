@@ -1,15 +1,16 @@
 # Read to Win Publications
 
-### A straightforward web API developed using Node.js with Express specifically for the Read to Win Publications automated system.
+##### A straightforward web API developed using Node.js with Express specifically for the Read to Win Publications automated system.
 
 ## Getting started
+
+### clone the project
 
 - clone the project into your local machine
 - `git checkout staging`
 - `npm install`
-- `npm run dev`
 
-## Setting up database connection
+### Setting up database connection
 
 Create a `.env` file with the following content:
 
@@ -28,3 +29,7 @@ PG_MAXCONN=150
 # jwt signing token
 JWT_SECRET= <RANDOM_SECURE_KEY>
 ```
+
+### starting the server
+
+- `npm run dev`
