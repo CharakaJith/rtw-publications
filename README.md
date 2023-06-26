@@ -43,3 +43,7 @@ JWT_SECRET= <RANDOM_SECURE_KEY>
   - `npm install`
   - `npm run migrate`
   - `npm run dev`
+
+## Postman API documentation
+
+- Link: [postman api documentation](https://documenter.getpostman.com/view/20111355/2s93z6f5Kt)
